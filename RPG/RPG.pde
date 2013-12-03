@@ -27,6 +27,7 @@ float r3;
 boolean increaseR1;
 boolean increaseR2;
 boolean increaseR3;
+boolean firstBattle;
 
 int WORLD_SIZE_X;
 int WORLD_SIZE_Y;
@@ -190,6 +191,7 @@ void mainMenu()
 
 void restart()
 {
+  firstBattle = true;
   battle = false;
   inventory = new ArrayList<Item>();
   carryCapacity = 100;
@@ -271,7 +273,7 @@ void restart()
     "You find yourself in a forest glade with no|memories of a past that you might have had. There|is a pile of loot infront of you, and a few dozen|men and women dressed like mages lie dead in a|circle around you.|", 
     "Their bodies look so flimsy that you could|probably break them between two fingers.|Especially the women. There is a thought in your|mind that you did not choose to think of... and its|not the one about breaking women.|", 
     "It is that there is an evil king that wants to conquer|every human settlement in the world. {Hold w, a,|s,or d to move until you get to the king's castle,|which the thought told you is to the west. Also,|watch out for enemies (red dots)!|", 
-    "If you are in their vision radius, they will pursue|you until you leave the radius. If they reach|your position a battle will start! There will be another tutorial, however.}|You feel a|burning desire to break something.|"
+    "If you are in their vision radius, they will pursue|you until you leave the radius. If they reach your|position, a battle will start! There will be another|tutorial, however.} You feel a burning desire to|break something.|"
   }
   ));
 }
@@ -331,7 +333,18 @@ void draw()
       {
         Enemy e = enemies.get(i);
         if (e.loc.dist(p.loc) == 0)
-          e.fight();
+        {
+          if (firstBattle)
+          {
+            dialogs.add(new Dialog(new String[] {
+              "{Click on the green circles before they dissappear to damage the enemy.|}"
+            }
+            ));
+          }
+          if (dialogs.size() == 0)
+            e.fight();
+          firstBattle = false;
+        }
       }
   }
   for (int i = 0; i < dialogs.size(); i ++)
