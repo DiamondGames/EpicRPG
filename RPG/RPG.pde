@@ -56,21 +56,21 @@ void setup()
     "xoooooooooooooooooooooooooooooooooooox", 
     "xoooooooooooooooooooooooooooooooooooox", 
     "xoooooooooooooooooooooooooooooooooooox", 
-    "xooooooooooooooooooooooooxooooooooooox", 
-    "xooooooooooooooooxoooooooooxooooooooox", 
-    "xoooooooooooooooooooeoxooooooooeooooox", 
-    "xooooooooooooooooxooooooooeooxooooooox", 
-    "xooooooooooooooxoooxooxooxooooooooooox", 
-    "xoooooooooooooxooooosooooooxoxooooooox", 
+    "xooooooooooooooxoooooooooxooooooooooox", 
+    "xooooooooooooooooxooooxooooxooooooooox", 
+    "xooooooooooooxooooooeoxooooooooeooooox", 
+    "xoooooooooxoxooooxooooooooeooxooooooox", 
+    "xoooooooooooeooxoooxooxooxoooooeooooox", 
+    "xoooooooooxoooxooooosooooooxoxooooooox", 
     "xoooooooooooooxooeoxoooexoooooooooooox", 
     "xooooooooooeoooxooooxoooxooxoeooooooox", 
-    "xooooooooooooooooxoeooxooxooooooooooox", 
-    "xooooooooooooooxoooooooxoooxooooooooox", 
-    "xooooooooooooxooooxoxxoeooooooooooooox", 
-    "xooooooooooooooeooooooooxoooooooooooox", 
-    "xooooooooooooooooxoexoxoooooooooooooox", 
+    "xooooooooooxoooooxoeooxooxooooooeoooox", 
+    "xoooooooeoooxooxoooooooxoooxoooxooooox", 
+    "xooooooooooooxooooxoxxoeooooooxxooooox", 
+    "xooooooooxoooooeooooooooxoooooooooooox", 
+    "xoooooooooeooxoooxoexoxoooooooooooooox", 
     "xooooooooooooooooooooxooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooooooox", 
+    "xooooooooooooooxooooooooooooooooooooox", 
     "xoooooooooooooooooooooooooooooooooooox", 
     "xoooooooooooooooooooooooooooooooooooox", 
     "xoooooooooooooooooooooooooooooooooooox", 
@@ -222,7 +222,7 @@ void restart()
         }
         else if (enemies.size() == 1)
         {
-          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 125, -1, 125, -1, width * .2, 1, 3, 20, width * .15, 0);
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 125, -1, 125, -1, width * .2, 1, 3, 20, width * .15, 5);
           enemies.add(e);
         }
         else if (enemies.size() == 2)
@@ -242,7 +242,7 @@ void restart()
         }
         else if (enemies.size() == 5)
         {
-          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 110, -1, 110, -1, width * .2, 1, 4, 20, width * .15, 0);
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 110, -1, 110, -1, width * .2, 1, 4, 20, width * .15, 5);
           e.loot.add(new Item(bronzeDagger));
           enemies.add(e);
         }
@@ -259,6 +259,42 @@ void restart()
         else if (enemies.size() == 8)
         {
           Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 110, -1, 110, -1, width * .2, 1, 4, 20, width * .15, 15);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 9)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 115, 115, 115, 115, width * .2, 1, 4, 20, width * .15, 5);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 10)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 115, 115, 115, 115, width * .2, 1, 2, 20, width * .15, 0);
+          e.loot.add(new Item(healingPotion));
+          enemies.add(e);
+        }
+        else if (enemies.size() == 11)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 125, -1, 125, -1, width * .2, 1, 4, 20, width * .15, 30);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 12)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 110, -1, 110, -1, width * .2, 1, 4, 20, width * .15, 0);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 13)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 125, -1, 125, -1, width * .2, 1, 4, 20, width * .15, 15);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 14)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 115, 115, 115, 115, width * .2, 1, 4, 20, width * .15, 0);
+          enemies.add(e);
+        }
+        else if (enemies.size() == 15)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 125, -1, 125, -1, width * .2, 1, 4, 20, width * .15, 0);
           enemies.add(e);
         }
       }
