@@ -50,31 +50,31 @@ void setup()
   runOnce2 = true;
   mouseJustPressed = false;
   strToSave = new String[] {
-    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xooooooooooooooooooooxooooooooooox", 
-    "xooooooooooooxoooooooooxooooooooox", 
-    "xoooooooooooooooeoxooooooooeooooox", 
-    "xooooooooooooxooooooooeooxooooooox", 
-    "xooooooooooxoooxooxooxooooooooooox", 
-    "xoooooooooxooooosooooooxoxooooooox", 
-    "xoooooooooxooeoxoooexoooooooooooox", 
-    "xooooooeoooxooooxoooxooxoeooooooox", 
-    "xooooooooooooxoeooxooxooooooooooox", 
-    "xooooooooooxoooooooxoooxooooooooox", 
-    "xooooooooxooooxoxxoeooooooooooooox", 
-    "xooooooooooeooooooooxoooooooooooox", 
-    "xooooooooooooxoexoxoooooooooooooox", 
-    "xooooooooooooooooxooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xoooooooooooooooooooooooooooooooox", 
-    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xooooooooooooooooooooooooxooooooooooox", 
+    "xooooooooooooooooxoooooooooxooooooooox", 
+    "xoooooooooooooooooooeoxooooooooeooooox", 
+    "xooooooooooooooooxooooooooeooxooooooox", 
+    "xooooooooooooooxoooxooxooxooooooooooox", 
+    "xoooooooooooooxooooosooooooxoxooooooox", 
+    "xoooooooooooooxooeoxoooexoooooooooooox", 
+    "xooooooooooeoooxooooxoooxooxoeooooooox", 
+    "xooooooooooooooooxoeooxooxooooooooooox", 
+    "xooooooooooooooxoooooooxoooxooooooooox", 
+    "xooooooooooooxooooxoxxoeooooooooooooox", 
+    "xooooooooooooooeooooooooxoooooooooooox", 
+    "xooooooooooooooooxoexoxoooooooooooooox", 
+    "xooooooooooooooooooooxooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xoooooooooooooooooooooooooooooooooooox", 
+    "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   };
   saveStrings("RPG Map.txt", strToSave);
   map = loadStrings("RPG Map.txt");
@@ -324,7 +324,7 @@ void draw()
     {
       dialogs.clear();
       dialogs.add(new Dialog(new String[] {
-        "{Click on the green circles before they dissappear|to damage the enemy.}"
+        "{Click on the green circles before they dissappear|to damage the enemy. You lose an HP each time|a green circle dissapears, you click on a red circle,|or you click randomly. The bottom bar shows your|HP, and the top shows the enemys'.}|"
       }
       ));
       firstBattle = false;
