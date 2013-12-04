@@ -76,8 +76,8 @@ void setup()
     "xoooooooooooooooooooooooooooooooox", 
     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   };
-  saveStrings("RPG Map", strToSave);
-  map = loadStrings("RPG Map");
+  saveStrings("RPG Map.txt", strToSave);
+  map = loadStrings("RPG Map.txt");
   strToSave = new String[] {
     "0-Name-1", 
     "Bronze Dagger", 
@@ -102,8 +102,8 @@ void setup()
     "20-Apply Effect Once-21", 
     "true"
   };
-  saveStrings("Healing Potion", strToSave);
-  healingPotion = loadStrings("Healing Potion");
+  saveStrings("Healing Potion.txt", strToSave);
+  healingPotion = loadStrings("Healing Potion.txt");
   strToSave = new String[] {
     "0-Name-1", 
     "Healing Potion", 
@@ -128,8 +128,8 @@ void setup()
     "20-Apply Effect Once-21", 
     "true"
   };
-  saveStrings("Bronze Dagger", strToSave);
-  bronzeDagger = loadStrings("Bronze Dagger");
+  saveStrings("Bronze Dagger.txt", strToSave);
+  bronzeDagger = loadStrings("Bronze Dagger.txt");
   WORLD_SIZE_Y = map.length;
   WORLD_SIZE_X = map[0].length();
   //inMainMenu = true;
@@ -318,34 +318,37 @@ void draw()
   }
   else
   {
-    for (int i = 0; i < atkIcons.size(); i ++)
-    {
-      AttackIcon a = atkIcons.get(i);
-      if (a.active)
-      {
-        a.show();
-        if (dialogs.size() == 0)
-          a.run();
-      }
-    }
     if (dialogs.size() == 0)
-      for (int i = 0; i < enemies.size(); i ++)
+      skipDialog = false;
+    if (firstBattle)
+    {
+      dialogs.clear();
+      dialogs.add(new Dialog(new String[] {
+        "{Click on the green circles before they dissappear|to damage the enemy.}"
+      }
+      ));
+      firstBattle = false;
+    }
+    if (!firstBattle)
+    {
+      for (int i = 0; i < atkIcons.size(); i ++)
       {
-        Enemy e = enemies.get(i);
-        if (e.loc.dist(p.loc) == 0)
+        AttackIcon a = atkIcons.get(i);
+        if (a.active)
         {
-          if (firstBattle)
-          {
-            dialogs.add(new Dialog(new String[] {
-              "{Click on the green circles before they dissappear to damage the enemy.|}"
-            }
-            ));
-          }
+          a.show();
           if (dialogs.size() == 0)
-            e.fight();
-          firstBattle = false;
+            a.run();
         }
       }
+      if (dialogs.size() == 0)
+        for (int i = 0; i < enemies.size(); i ++)
+        {
+          Enemy e = enemies.get(i);
+          if (e.loc.dist(p.loc) == 0)
+            e.fight();
+        }
+    }
   }
   for (int i = 0; i < dialogs.size(); i ++)
   {

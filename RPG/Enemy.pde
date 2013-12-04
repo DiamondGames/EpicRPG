@@ -66,6 +66,7 @@ class Enemy
     }
     if (loc.dist(p.loc) == 0)
     {
+      //firstBattle = true;
       camera(width / 2, height / 2, (height/2.0) / tan(PI*30.0 / 180.0) * CAMERA_ZOOM, width / 2, height / 2, 0, 0, 1, 0);
       atkIcons.clear();
       battle = true;

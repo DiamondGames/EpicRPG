@@ -1,22 +1,22 @@
 0-Name-1
-Healing Potion
+Bronze Dagger
 2-Consume-3
-true
-4-Passive-5
 false
+4-Passive-5
+true
 6-Cost-7
-50
+75
 8-Player Heatlh Add (mh = max health...h = health)-9
 5
 10-Plyer Health Set (mh = max health...h = health)-11
 h
 12-Visible In Combat-13
-true
+false
 14-Player Damage Add (d = damage)-15
-0
+1
 16-Player Damage Set (d = damage)-17
 d
 18-Hands-19
-0
+1
 20-Apply Effect Once-21
 true

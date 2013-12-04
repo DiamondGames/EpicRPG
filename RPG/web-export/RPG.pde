@@ -27,6 +27,7 @@ float r3;
 boolean increaseR1;
 boolean increaseR2;
 boolean increaseR3;
+boolean firstBattle;
 
 int WORLD_SIZE_X;
 int WORLD_SIZE_Y;
@@ -75,8 +76,8 @@ void setup()
     "xoooooooooooooooooooooooooooooooox", 
     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   };
-  saveStrings("RPG Map", strToSave);
-  map = loadStrings("RPG Map");
+  saveStrings("RPG Map.txt", strToSave);
+  map = loadStrings("RPG Map.txt");
   strToSave = new String[] {
     "0-Name-1", 
     "Bronze Dagger", 
@@ -101,8 +102,8 @@ void setup()
     "20-Apply Effect Once-21", 
     "true"
   };
-  saveStrings("Healing Potion", strToSave);
-  healingPotion = loadStrings("Healing Potion");
+  saveStrings("Healing Potion.txt", strToSave);
+  healingPotion = loadStrings("Healing Potion.txt");
   strToSave = new String[] {
     "0-Name-1", 
     "Healing Potion", 
@@ -127,8 +128,8 @@ void setup()
     "20-Apply Effect Once-21", 
     "true"
   };
-  saveStrings("Bronze Dagger", strToSave);
-  bronzeDagger = loadStrings("Bronze Dagger");
+  saveStrings("Bronze Dagger.txt", strToSave);
+  bronzeDagger = loadStrings("Bronze Dagger.txt");
   WORLD_SIZE_Y = map.length;
   WORLD_SIZE_X = map[0].length();
   //inMainMenu = true;
@@ -190,6 +191,7 @@ void mainMenu()
 
 void restart()
 {
+  firstBattle = true;
   battle = false;
   inventory = new ArrayList<Item>();
   carryCapacity = 100;
@@ -254,6 +256,11 @@ void restart()
           Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 115, 115, 115, 115, width * .2, 1, 2, 20, width * .15, 25);
           enemies.add(e);
         }
+        else if (enemies.size() == 8)
+        {
+          Enemy e = new Enemy(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 110, -1, 110, -1, width * .2, 1, 4, 20, width * .15, 15);
+          enemies.add(e);
+        }
       }
       else if (map[y].charAt(x) == 's')
         p = new Player(new PVector(x * SPACE_SIZE + (SPACE_SIZE / 2), y * SPACE_SIZE + (SPACE_SIZE / 2)), 25, 1, 10);
@@ -265,7 +272,8 @@ void restart()
   dialogs.add(new Dialog(new String[] {
     "You find yourself in a forest glade with no|memories of a past that you might have had. There|is a pile of loot infront of you, and a few dozen|men and women dressed like mages lie dead in a|circle around you.|", 
     "Their bodies look so flimsy that you could|probably break them between two fingers.|Especially the women. There is a thought in your|mind that you did not choose to think of... and its|not the one about breaking women.|", 
-    "It is that there is an evil king that wants to conquer|every human settlement in the world. You feel a|powerful desire to break something.|"
+    "It is that there is an evil king that wants to conquer|every human settlement in the world. {Hold w, a,|s,or d to move until you get to the king's castle,|which the thought told you is to the west. Also,|watch out for enemies (red dots)!|", 
+    "If you are in their vision radius, they will pursue|you until you leave the radius. If they reach your|position, a battle will start! There will be another|tutorial, however.} You feel a burning desire to|break something.|"
   }
   ));
 }
@@ -310,6 +318,14 @@ void draw()
   }
   else
   {
+    if (firstBattle)
+    {
+      dialogs.add(new Dialog(new String[] {
+        "{Click on the green circles before they dissappear|to damage the enemy.}"
+      }
+      ));
+      firstBattle = false;
+    }
     for (int i = 0; i < atkIcons.size(); i ++)
     {
       AttackIcon a = atkIcons.get(i);
@@ -486,7 +502,10 @@ class Dialog
   {
     fill(255);
     rectMode(CORNERS);
-    rect(0, p.loc.y + (height / 2) - (height * .425), width * 2, p.loc.y + (height / 2));
+    if (!battle)
+      rect(0, p.loc.y + (height / 2) - (height * .425), width * 2, p.loc.y + (height / 2));
+    else
+      rect(0, height - (height * .425), width * 2, height);
     fill(0);
     textAlign(LEFT, TOP);
     String[] lines = new String[7];
@@ -506,7 +525,12 @@ class Dialog
     for (int i = 0; i < lines.length; i ++)
     {
       for (int i2 = 0; i2 < 4; i2 ++)
-        text(lines[i], p.loc.x - (width / 2), p.loc.y + (height / 2) - (height * .375) + (fontSize * i) - (fontSize / 2));
+      {
+        if (!battle)
+          text(lines[i], p.loc.x - (width / 2), p.loc.y + (height / 2) - (height * .375) + (fontSize * i) - (fontSize / 2));
+        else
+          text(lines[i], 0, height - (height * .375) + (fontSize * i) - (fontSize / 2));
+      }
     }
   }
 
@@ -516,7 +540,7 @@ class Dialog
     {
       skipDialog = false;
       currentPart ++;
-      if (currentPart >= strings.length)
+      if (currentPart > strings.length - 1)
       {
         dialogs.remove(this);
         active = false;
@@ -593,6 +617,7 @@ class Enemy
     }
     if (loc.dist(p.loc) == 0)
     {
+      //firstBattle = true;
       camera(width / 2, height / 2, (height/2.0) / tan(PI*30.0 / 180.0) * CAMERA_ZOOM, width / 2, height / 2, 0, 0, 1, 0);
       atkIcons.clear();
       battle = true;
