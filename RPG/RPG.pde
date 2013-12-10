@@ -6,6 +6,7 @@ PFont font;
 ArrayList<Enemy> enemies;
 ArrayList<AttackIcon> atkIcons;
 ArrayList<Dialog> dialogs;
+ArrayList dialogsTotal;
 ArrayList<Space> spaces;
 boolean battle;
 boolean mouseJustPressed;
@@ -19,6 +20,8 @@ String[] healingPotion;
 String[] bronzeDagger;
 String[] strToSave;
 ArrayList<Item> inventory;
+ArrayList<Conversation> conversations;
+ArrayList conversationsTotal;
 float carryCapacity;
 boolean inMainMenu;
 float r1;
@@ -191,6 +194,8 @@ void mainMenu()
 
 void restart()
 {
+  conversationsTotal = new ArrayList();
+  conversations = new ArrayList<Conversation>();
   firstBattle = true;
   battle = false;
   inventory = new ArrayList<Item>();
@@ -305,13 +310,13 @@ void restart()
   atkIcons = new ArrayList<AttackIcon>();
   //inventory.add(new Item(bronzeDagger));
   dialogs = new ArrayList<Dialog>();
+  dialogsTotal = new ArrayList();
   dialogs.add(new Dialog(new String[] {
-    "You find yourself in a forest glade with no|memories of a past that you might have had. There|is a pile of loot infront of you, and a few dozen|men and women dressed like mages lie dead in a|circle around you.|", 
-    "Their bodies look so flimsy that you could|probably break them between two fingers.|Especially the women. There is a thought in your|mind that you did not choose to think of... and its|not the one about breaking women.|", 
-    "It is that there is an evil king that wants to conquer|every human settlement in the world. {Hold w, a,|s,or d to move until you get to the king's castle,|which the thought told you is to the west. Also,|watch out for enemies (red dots)!|", 
-    "If you are in their vision radius, they will pursue|you until you leave the radius. If they reach your|position, a battle will start! There will be another|tutorial, however.} You feel a burning desire to|break something.|"
+    "You find yourself in a forest glade with no|memories of a past that you might have had, only|simple knowledge of how to speak, move around,|etc. There is a woman standing in your peripheral|vision, and a few dozen men and women lie dead|in a circle around you.|", 
+    "Their bodies look so flimsy that you could|probably break them between two fingers.|Especially the women. The standing woman looks|a bit sad, and is trying to hold something. She|starts to speak.|"
   }
   ));
+  dialogsTotal.add(0);
 }
 
 void draw()
@@ -323,67 +328,70 @@ void draw()
   }
   //mouseLoc = PVector.div(new PVector(mouseX, mouseY), CAMERA_ZOOM);
   background(0);
-  if (!battle)
+  if (conversations.size() == 0)
   {
-    camera(p.loc.x, p.loc.y, (height/2.0) / tan(PI*30.0 / 180.0) * CAMERA_ZOOM, p.loc.x, p.loc.y, 0, 0, 1, 0);
-    fill(0, 255, 0);
-    stroke(0);
-    for (int i = 0; i < spaces.size(); i ++)
+    if (!battle)
     {
-      Space s = spaces.get(i);
-      s.run();
-      if (s.explored)
-        s.show();
-    }
-    for (int i = 0; i < enemies.size(); i ++)
-    {
-      Enemy e = enemies.get(i);
-      if (e.explored)
-        e.show();
-      if (dialogs.size() == 0)
-        e.run();
-    }
-    if (dialogs.size() == 0)
-      p.run();
-    p.show();
-    textAlign(LEFT, TOP);
-    fill(127);
-    text("HP: " + p.hp + " / " + p.maxHP, p.loc.x - (width / 2), p.loc.y - (height / 2));
-    //text("Damage: "+ p.damage, p.loc.x - (width / 2), p.loc.y - (height / 2) + fontSize);
-    text("Gold: " + p.gold, p.loc.x - (width / 2), p.loc.y - (height / 2) + fontSize * 1);
-  }
-  else
-  {
-    if (dialogs.size() == 0)
-      skipDialog = false;
-    if (firstBattle)
-    {
-      dialogs.clear();
-      dialogs.add(new Dialog(new String[] {
-        "{Click on the green circles before they dissappear|to damage the enemy. You lose an HP each time|a green circle dissapears, you click on a red circle,|or you click randomly. The bottom bar shows your|HP, and the top shows the enemys'.}|"
-      }
-      ));
-      firstBattle = false;
-    }
-    if (!firstBattle)
-    {
-      for (int i = 0; i < atkIcons.size(); i ++)
+      camera(p.loc.x, p.loc.y, (height/2.0) / tan(PI*30.0 / 180.0) * CAMERA_ZOOM, p.loc.x, p.loc.y, 0, 0, 1, 0);
+      fill(0, 255, 0);
+      stroke(0);
+      for (int i = 0; i < spaces.size(); i ++)
       {
-        AttackIcon a = atkIcons.get(i);
-        if (a.active)
-        {
-          a.show();
-          if (dialogs.size() == 0)
-            a.run();
-        }
+        Space s = spaces.get(i);
+        s.run();
+        if (s.explored)
+          s.show();
+      }
+      for (int i = 0; i < enemies.size(); i ++)
+      {
+        Enemy e = enemies.get(i);
+        if (e.explored)
+          e.show();
+        if (dialogs.size() == 0)
+          e.run();
       }
       if (dialogs.size() == 0)
-        for (int i = 0; i < enemies.size(); i ++)
-        {
-          Enemy e = enemies.get(i);
-          if (e.loc.dist(p.loc) == 0)
-            e.fight();
+        p.run();
+      p.show();
+      textAlign(LEFT, TOP);
+      fill(127);
+      text("HP: " + p.hp + " / " + p.maxHP, p.loc.x - (width / 2), p.loc.y - (height / 2));
+      //text("Damage: "+ p.damage, p.loc.x - (width / 2), p.loc.y - (height / 2) + fontSize);
+      text("Gold: " + p.gold, p.loc.x - (width / 2), p.loc.y - (height / 2) + fontSize * 1);
+    }
+    else
+    {
+      if (dialogs.size() == 0)
+        skipDialog = false;
+      if (firstBattle)
+      {
+        dialogs.clear();
+        dialogs.add(new Dialog(new String[] {
+          "{Click on the green circles before they dissappear|to damage the enemy. You lose an HP each time|a green circle dissapears, you click on a red circle,|or you click randomly. The bottom bar shows your|HP, and the top shows the enemys'.}|"
         }
+        ));
+        firstBattle = false;
+      }
+      if (!firstBattle)
+      {
+        for (int i = 0; i < atkIcons.size(); i ++)
+        {
+          AttackIcon a = atkIcons.get(i);
+          if (a.active)
+          {
+            a.show();
+            if (dialogs.size() == 0)
+              a.run();
+          }
+        }
+        if (dialogs.size() == 0)
+          for (int i = 0; i < enemies.size(); i ++)
+          {
+            Enemy e = enemies.get(i);
+            if (e.loc.dist(p.loc) == 0)
+              e.fight();
+          }
+      }
     }
   }
   for (int i = 0; i < dialogs.size(); i ++)
@@ -400,6 +408,20 @@ void draw()
       i.run();
     if (keys[4])
       i.show();
+  }
+  for (int i = 0; i < conversations.size(); i ++)
+  {
+    Conversation c = conversations.get(i);
+    if (c.active)
+    {
+      c.run();
+      c.show();
+    }
+  }
+  if (dialogs.size() == 0 && dialogsTotal.size() == 1 && conversationsTotal.size() == 0)
+  {
+    conversations.add(new Conversation("Sex?"));
+    conversationsTotal.add(0);
   }
 }
 

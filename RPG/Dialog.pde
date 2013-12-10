@@ -21,7 +21,7 @@ class Dialog
       rect(0, height - (height * .425), width * 2, height);
     fill(0);
     textAlign(LEFT, TOP);
-    String[] lines = new String[7];
+    String[] lines = new String[6];
     for (int i = 0; i < lines.length; i ++)
       lines[i] = "";
     int currentLine = 0;
